@@ -1,0 +1,53 @@
+@(tasks: List[Task])
+@main("Task Tracker"){
+    <br>
+    <div class="col-lg-12">
+        <h3>Task Tracker</h3>
+        <form action="@routes.TaskController.newTask()" method="post" class="form-inline">
+            <div class="form-group">
+                <label for="exampleInputName2">Name</label>
+                <input name="tasksName" type="text" class="form-control" id="exampleInputName2" placeholder="Write your task here...">
+            </div>
+            <input class="btn btn-success" type="submit" value="Add">
+        </form>
+    </div>
+    <div class="col-lg-12" style="margin-top: 20px;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tasks</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(tasks.isEmpty) {
+                            <tr><td colspan="3">No Tasks</td></tr>
+                    }else {
+                        @tasks.map { task =>
+                            <tr>
+                                <td>@task.id</td>
+                                <td>@task.name</td>
+                                <td><button class="btn btn-danger btn-sm" onclick="deleteTask(@task.id)">Delete</button></td>
+                            </tr>
+                        }
+                    }
+
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+            function deleteTask ( id ) {
+                var req = new XMLHttpRequest ( ) ;
+                req.open ( "delete", "/tasks/" + id ) ;
+                req.onload = function ( e ) {
+                    if ( req.status = 200 ) {
+                        document.location.reload ( true ) ;
+                    }
+                } ;
+                req.send ( ) ;
+            }
+    </script>
+
+}
