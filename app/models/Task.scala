@@ -19,10 +19,4 @@ object Task {
   def delete(taskId: Int) = {
     taskList = taskList.filterNot(task => task.id == taskId)
   }
-
-
-
-
-
-
 }
